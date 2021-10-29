@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyhetssak-4</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
+    
+</head>
+<body>
+    <section class="p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex flex-column align-items-center justify-content-around">
+                <h1 class="display-4 mb-5">Halden-Reaktoren</h1>
+                <p class="my-4 ">
+                    "Det var en torsdag morgen en vakker høstdag i Halden sentrum. Byens borgere var allerede på farten med å frakte sine barn til skole og barnehage, noen var allerede på jobb, mens andre var i ferd med å avslutte sine natteskift. Som lyn fra klar himmel, på en ellers så vanlig dag i den ellers så stille og idylliske byen, kunne det høres et enormt smell, som runget over alle byens bydeler. Forvirringen var stor. En lyd ulikt noe som helst man hadde hørt før. Hva hadde hendt?"
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex flex-column align-items-center justify-content-around">
+                <p class="my-4 ">
+                    "Byen stoppet opp. Pendlere gikk ut av sine biler. De tittet opp. Der så de en gigantisk sky over Halden by. En sky ulik andre skyer. Denne minnet om noen man bare hadde sett på bilder og i filmer. Luften kjentes annerledes ut. Den milde vinden bar plutselig små partikler som luktet metallisk. Flere og flere innså hva som hadde skjedd. Flere og flere innså det var for sent å komme seg vekk. Noen forsøkte likevel. Men skaden var allerede skjedd. Haldens reaktor hadde eksplodert. Det livet som engang var så idyllisk, så fredelig, så kjent og forutsigbart vil aldri mer kunne eksistere i vakre, tradisjonsrike, og historiske Halden."
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="p-sm-0 pt-lg-5">
+        <div id="map" class="container d-sm-flex flex-column align-items-center">
+            <button id="nuke" class="btn">&rarr; Nuke Halden &larr;</button>
+            <div id="textCon" class="text-center text-sm-start">
+                <div id="text7" class="text2">
+                    <h3 class="hSize text-center">Scenario</h3>
+                    <p class="pSize m-1">Reaktoren produserte 88 kilo med radioaktivt avfall i året da den var aktiv.  1 kilo med radioaktivt materiale tilsvarer ca 1 kilotonn med sprengkraft, alle utregninger går ut i fra at eksplosjonen er på ca 88 kilotonn.</p>    
+                </div>
+                <div id="text1" class="text">
+                    <h3 class="hSize text-center">Ildkulen: radius 480 m (0.71 km²)</h3>
+                    <p class="pSize m-1">Alt på innsiden av ildkulen vil bli fordampet.</p>    
+                </div>
+                <div id="text2" class="text">
+                    <h3 class="hSize text-center">Den indre trykkbølgen: radius 0.97 km (2.94 km²)</h3>
+                    <p class="pSize m-1">Trykkbølgen er på over dobbelt atmosfærisk trykk. Bygninger laget av betong vil få store skader eller bli totalt ødelagt. Dødeligheten er tilnærmet 100%.</p>    
+                </div>
+                <div id="text3" class="text">
+                    <h3 class="hSize text-center">Radioaktivt område (500 rem): radius 1.79 km (10.1 km²)</h3>
+                    <p class="pSize m-1">15% av dem som overlever inni dette området vil eventuelt dø av kreft på grunn av den radioaktive strålingen de ble utsatt for.</p>    
+                </div>
+                <div id="text4" class="text">
+                    <h3 class="hSize text-center">Moderat trykkbølge: radius 2.04 km (13 km²)</h3>
+                    <p class="pSize m-1">De fleste hus vil kollapse. Skader på mennesker vil være omfattende og sjansene for å overleve er små. Sjansene for brann er veldig høy, og faren for spredning er også ganske høy.</p>    
+                </div>
+                <div id="text5" class="text">
+                    <h3 class="hSize text-center">Varmestråling: radius 3.69 km (42.8 km²)</h3>
+                    <p class="pSize m-1">100% sannsynlighet for tredjegrads forbrenning hvis man ikke er i sikkerhet. Tredjegrads forbrenning går igjennom alle lagene i huden og er ofte smertefri fordi nervene blir ødelagt. Kan forårsake invaliditet, store arrdannelser og kan kreve amputering. Det er også stor fare for branner.</p>    
+                </div>
+                <div id="text6" class="text">
+                    <h3 class="hSize text-center">Liten trykkbølge: radius 5.23 km (86 km²)</h3>
+                    <p class="pSize m-1">Et overtrykk som er kraftig nok til å knuse vinduer. Dette kan forårsake skader på befolkningen som samler seg ved vinduer for å bevitne lyset fra eksplosjonen. Lyset beveger seg raskere en trykkbølgen.</p>    
+                </div>
+                <div id="counter" class="container d-sm-flex justify-content-around text2">
+                    <div class="text-center">
+                        <p class="m-0">Antall døde:</p>
+                        <div class="value h3" data-target="10210">0</div>
+                    </div>
+                    <div class="text-center">
+                        <p class="m-0">Antall skadde:</p>
+                        <div class="value h3" data-target="6840">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section class="p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex flex-column align-items-center justify-content-around">
+                <h2 class="display-4 mb-5">En fiksjon</h2>
+                <p class="my-4 ">
+                    Dette er heldigvis en fiksjon. En dystopisk fiksjon som kunne ha blitt virkelighet, dersom alt hadde gått galt den 24.10.2016. Denne dagen skjedde det nemlig et uhell ved reaktoren i Halden. Uhellet bestod i at det skjedde en lekkasje av radioaktivt jod. Denne lekkasjen, som i seg selv er relativt ufarlig, kunne ha blitt katastrofal hadde det ikke vært for rene tilfeldigheter. 
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex flex-column align-items-center justify-content-around">
+                <p class="my-4 ">
+                    Halden-reaktoren ble grunnlagt i 1958 gjennom et OECD samarbeid. Hele 70% av finansieringen kom fra utlandet, noe som gjorde prosjektet lettere å gjennomføre. Reaktoren har i mange år bidratt til å utvinne energi for det lokale området og har også vært en kunnskapsbase for atom teknologi. 
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex flex-column align-items-center justify-content-around">
+                <h2 class="display-4 mb-5">Sjokkrapporten</h2>
+                <p class="my-4 ">
+                    I en tilsynsrapport over Haldens-reaktorens drift, så kom det frem at sikkerhetsrutinene var kritikkverdige. Det viste seg at manglene var så store at reaktoren ikke hadde godkjenning for videre drift, noe som ble ignorert av reaktorens ledelse. Det var ikke før flere år senere at tiltakene ble tatt på alvor, og reaktoren kunne drive trygt inn i fremtiden. Konsekvensene ved en ulykke i denne perioden kunne vært katastrofale for hele det sentrale Østlandet.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex flex-column align-items-center justify-content-around">
+                <p class="my-4 ">
+                    I dag kan Haldensere betrygge seg med at reaktoren har vært skrudd av siden 2018. Dersom den skulle gjenåpnes vil det forventes en seriøs og åpen debatt rundt reaktorens sikkerhetsvurdering. Samtidig er det ingen indikasjoner på at den vil åpnes igjen i nær fremtid. 
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    
+    <script>
+        var zoomLvl = 17;
+        var index = 0;
+        var circles = [
+            {
+                cords: [59.12762, 11.40156],
+                attr: {
+                    color: 'red',
+                    fillColor: 'yellow',
+                    fillOpacity: 0.5,
+                    radius: 0
+                },
+                maxSize: 480,
+                zoom: 15
+            },
+            {
+                cords: [59.12762, 11.40156],
+                attr: {
+                    color: 'red',
+                    fillColor: 'red',
+                    fillOpacity: 0.5,
+                    radius: 480
+                },
+                maxSize: 790,
+                zoom: 14
+            },
+            {
+                cords: [59.12762, 11.40156],
+                attr: {
+                    color: 'red',
+                    fillColor: 'green',
+                    fillOpacity: 0.5,
+                    radius: 790
+                },
+                maxSize: 1790,
+                zoom: 14
+            },
+            {
+                cords: [59.12762, 11.40156],
+                attr: {
+                    color: 'red',
+                    fillColor: 'lightblue',
+                    fillOpacity: 0.5,
+                    radius: 1790
+                },
+                maxSize: 2040,
+                zoom: 13
+            },
+            {
+                cords: [59.12762, 11.40156],
+                attr: {
+                    color: 'red',
+                    fillColor: 'orange',
+                    fillOpacity: 0.5,
+                    radius: 2040
+                },
+                maxSize: 3690,
+                zoom: 12
+            },
+            {
+                cords: [59.12762, 11.40156],
+                attr: {
+                    color: 'red',
+                    fillColor: 'lightgray',
+                    fillOpacity: 0.5,
+                    radius: 3690
+                },
+                maxSize: 5230,
+                zoom: 12
+            }
+        ]
+        var map = L.map("map", {scrollWheelZoom: false, zoomControl: false, doubleClickZoom: false}).setView([59.12746, 11.40297], zoomLvl);
+        // initiate tilelayer
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: "<a href='https://openstreetmap.org'>Openstreetmap</a>"
+        }).addTo(map);
+        // markers
+        var reactor = L.marker([59.12762, 11.40156]).addTo(map);
+        //popup
+        reactor.bindPopup("This will go boom");
+        
+
+        document.getElementById("nuke").addEventListener("click", init);
+        var textBox = document.querySelectorAll(".text");
+        textBox.forEach(item => {item.classList.add("none")});
+
+        function mapInit() {
+            console.log(index);
+            if(map != null){
+                map._leaflet_id = null;
+            }
+            map = L.map("map", {scrollWheelZoom: false, zoomControl: false, doubleClickZoom: false}).setView([59.12746, 11.40297], zoomLvl);
+            // initiate tilelayer
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: "<a href='https://openstreetmap.org'>Openstreetmap</a>"
+            }).addTo(map);
+            // markers
+            reactor = L.marker([59.12762, 11.40156]).addTo(map);
+            //popup
+            reactor.bindPopup("This will go boom");
+        }
+
+        function init() {
+            var circle = L.circle(circles[index].cords, {
+                color: circles[index].attr.color,
+                fillColor: circles[index].attr.fillColor,
+                fillOpacity: circles[index].attr.fillOpacity,
+                radius: circles[index].attr.radius
+            }).addTo(map);
+
+            zoomLvl = circles[index].zoom;
+            map.setView([59.12746, 11.40297], zoomLvl);
+
+            animate(circle, circles[index].maxSize);
+            document.getElementById("nuke").removeEventListener("click", init);
+            setTimeout(function() {
+                document.getElementById("map").addEventListener("click", next);
+            }, 500);
+            document.getElementById("text7").classList.add("none");
+            textBox[index].classList.remove("none");
+            textBox[index].classList.add("fadeIn");
+            document.getElementById("nuke").disabled = true;
+            document.getElementById("nuke").innerHTML = "Trykk på kartet for å fortsette";
+            
+        };
+
+        function reset() {
+            index = 0;
+            zoomLvl = 17;
+            map.off();
+            map.remove();
+            mapInit();
+            textBox.forEach(item => {item.classList.add("none")});
+            document.getElementById("nuke").removeEventListener("click", reset);
+            document.getElementById("nuke").addEventListener("click", init);
+            document.getElementById("nuke").innerHTML = "&rarr; Nuke Halden &larr;";
+            document.getElementById("text7").classList.remove("none");
+            document.getElementById("counter").style.visibility = "hidden";
+            document.querySelectorAll(".value").forEach(item => item.innerHTML = "0");
+
+        }
+
+        function next() {
+            ++index
+            var circle = L.circle(circles[index].cords, {
+                color: circles[index].attr.color,
+                fillColor: circles[index].attr.fillColor,
+                fillOpacity: circles[index].attr.fillOpacity,
+                radius: circles[index].attr.radius
+            }).addTo(map);
+
+            zoomLvl = circles[index].zoom;
+            map.setView([59.12746, 11.40297], zoomLvl);
+
+            animate(circle, circles[index].maxSize);
+            textBox.forEach(item => {item.classList.add("none")});
+            textBox[index].classList.remove("none");
+            textBox[index].classList.add("fadeIn");
+
+            if (index === 5) {
+                document.getElementById("counter").style.visibility = "visible";
+                count();
+                document.getElementById("nuke").disabled = false;
+                document.getElementById("nuke").innerHTML = "Start på nytt";
+                document.getElementById("nuke").removeEventListener("click", next);
+                document.getElementById("map").removeEventListener("click", next);
+                document.getElementById("nuke").addEventListener("click", reset);
+            }
+        }
+
+        function animate(circle, maxSize) {
+            var interval = setInterval(function() {
+                var currentRadius = circle.getRadius();
+
+                //console.debug("currentRadius", currentRadius);
+
+                if (currentRadius < maxSize) {
+                    circle.setRadius(++currentRadius);
+                    //console.debug("new Radius", circle.getRadius());
+                } else {
+                    clearInterval(interval);
+                }
+            }, 1);
+        }
+
+        function count() {
+            var counters = document.querySelectorAll(".value");
+            var speed = 1000;
+            counters.forEach( counter => {
+                var teller = () => {
+                    var value = +counter.getAttribute("data-target");
+                    var data = +counter.innerText;
+                    
+                    var time = value / speed;
+                    if (data < value) {
+                        counter.innerText = Math.ceil(data + time);
+                        setTimeout(teller, 1);
+                    } else {
+                        counter.innerText = value;
+                    }
+                    
+                }
+                teller();
+            });
+        }
+
+    </script>
+</body>
+</html>
